@@ -1,0 +1,1 @@
+package net.linxingyang.personal.mapper;public interface PersonCustomMapper {}

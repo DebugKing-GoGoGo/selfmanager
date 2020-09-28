@@ -1,0 +1,89 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <base href="<%=basePath%>">
+        <title>后台管理</title>
+        <jsp:include page="../../layout/css.jsp"></jsp:include>
+    </head>
+    <body class="layui-layout-body" id="layuiLayoutBody">
+        <div class="layui-layout">
+            <div class="layui-container">
+                <br><br>
+				<div class="layui-row">
+				    <form class="layui-form layui-form-pane" action="">
+				        
+				        <div class="layui-form-item pane">
+				            <label class="layui-form-label">日记日期</label>
+				            <div class="layui-input-inline">
+				                <input autocomplete="off" placeholder="请选择日记日期" required  lay-verify="required" 
+				                    type="text" class="layui-input" id="diaryDate" name="diaryDate">
+				            </div>
+				        </div>
+				        
+				        <div class="layui-form-item">
+				            <label class="layui-form-label">天气</label>
+				            <div class="layui-input-block">
+				                <input type="text" name="weather" required  lay-verify="required" placeholder="请输入天气" 
+				                    autocomplete="off" class="layui-input">
+				            </div>
+				        </div>
+				        
+				        <div class="layui-form-item">
+				            <label class="layui-form-label">写日记地点</label>
+				            <div class="layui-input-block">
+				                <input type="text" name="place" required  lay-verify="required" placeholder="请输入日记地点" 
+				                    autocomplete="off" class="layui-input">
+				            </div>
+				        </div>
+				        
+				        <div class="layui-form-item" pane>
+				            <label class="layui-form-label">心情</label>
+				            <div class="layui-input-block">
+				                <input type="text" name="mood" required  lay-verify="required" placeholder="请输入心情" 
+				                    autocomplete="off" class="layui-input">
+				            </div>
+				        </div>
+				        
+				        <div class="layui-form-item layui-form-text pane">
+				            <label class="layui-form-label">日记内容</label>
+				            <div class="layui-input-block">
+				                <textarea rows="10" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+				            </div>
+				        </div>
+				        
+				        <div class="layui-form-item">
+				            <div class="layui-input-block">
+				                <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
+				                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				            </div>
+				        </div>
+				        
+				    </form>
+				</div>
+            </div>
+        </div>
+        <jsp:include page="../../layout/js.jsp"></jsp:include>
+        <script>
+            function pageScript(params) {
+                var command = params.command;
+                var globals = params.globals;
+                
+                laydate.render({
+                    elem: "#diaryDate" 
+                    ,value: new Date()
+                });
+                
+                form.on("submit(add)", function(data) {
+                    command.add(data.field);
+                    return false;
+                });
+            };
+        </script>
+        <jsp:include page="diary.jsp"></jsp:include>
+    </body>   
+</html>

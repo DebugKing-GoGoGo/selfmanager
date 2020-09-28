@@ -1,0 +1,1 @@
+package net.linxingyang.diary.mapper;public interface TaskPlanCustomMapper {}

@@ -1,0 +1,1 @@
+package net.linxingyang.config.mapper;public interface ConfigCustomMapper {}

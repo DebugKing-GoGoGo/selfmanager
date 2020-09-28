@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd"> 
+
+<!-- 这样springmvc在web.xml中配置的DispatcherServlet就不会处理静态资源了。
+     说明静态资源放在resources下面。 -->
+<mvc:resources mapping="/resources/**" location="/resources/*" />
+
+
+<!-- 使用mvc:annotation-driven可以代替注解适配器和注解映射器 
+    同时它还加载其它一些参数绑定方法，比如json转换解析器
+    实际开发是用这个的mvc:annotation-driven。
+-->
+<mvc:annotation-driven/>
+
+<!-- 组件扫描，扫描多个包就逗号隔开 -->
+<context:component-scan base-package="net.linxingyang.*.controller">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+</context:component-scan>
+
+
+<!-- 视图解析器 
+这个视图解析器需要jstl的支持，所以需要导入jstl的包
+-->
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!-- 
+        prefix表示前缀，这样就指定了jsp文件前面的统一路径为/jsp/
+        suffix表示后缀，这样就指定了jsp文件的后缀为.jsp
+        如有一个视图在  /jsp/user/login.jsp
+        则可以写成  user/login 即可
+     -->
+    <property name="prefix" value="/jsp/"/>
+    <property name="suffix" value=".jsp"/>
+</bean> 
+
+<!-- 最大的文件上传尺寸 31MB=1024 * 1024 * 31 --> 
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize">
+        <value>31457280</value>
+    </property>
+</bean>
+
+
+<!-- 启动JSON格式的配置 -->
+<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" lazy-init="false">    
+<!--解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
+      <property name="supportedMediaTypes">
+           <list>
+               <value>text/html;charset=UTF-8</value>
+               <value>application/json</value>
+           </list>
+       </property>
+</bean>
+    
+</beans>

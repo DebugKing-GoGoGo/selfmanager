@@ -1,0 +1,1 @@
+package net.linxingyang.diary.mapper;import net.linxingyang.diary.pojo.Task;public interface TaskCustomMapper {	// <insert id="insert" parameterType="net.linxingyang.diary.pojo.Task" >	void insert(Task task); }
